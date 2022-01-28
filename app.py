@@ -189,7 +189,7 @@ fig11.update_layout(
 )
 fig11.update_xaxes(dtick="M1")
 
-st.plotly_chart(fig11)
+st.plotly_chart(fig11, use_container_width=True)
 
 
 df_test = df_idx_prc_eom.copy()
