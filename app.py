@@ -187,6 +187,7 @@ fig11 = go.Figure(go.Waterfall(
 fig11.update_layout(
         title = "KOSPI 2021",
         showlegend = True,
+        height=500,
 )
 fig11.update_xaxes(dtick="M1")
 
