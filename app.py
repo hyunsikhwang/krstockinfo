@@ -8,6 +8,7 @@ import plotly.express as px
 import numpy as np
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+import streamlit as st
 
 
 # 수익률 = (당월말 종가 - 전월말 종가) / 전월말 종가
@@ -153,7 +154,7 @@ fig.update_layout(xaxis=dict(tickmode='linear', dtick=1),
                   width=800,
                   height=800)
 
-fig.show()
-
+#fig.show()
+st.plotly_chart(fig)
 st.write(df_idx_prc_eom)
 
