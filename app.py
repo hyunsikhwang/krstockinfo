@@ -84,6 +84,14 @@ def idx_prc(mktType):
  
     return org_df
 
+
+st.set_page_config(
+    page_title="Korea Stock Market Information",
+    page_icon=":shark:",
+    layout="wide",
+    initial_sidebar_state="expanded"
+    )
+
 max_work_dt = maxworkdt_command()
 #display(max_work_dt)
 df_idx_prc = idx_prc(max_work_dt)
