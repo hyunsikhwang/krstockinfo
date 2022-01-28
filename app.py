@@ -9,6 +9,7 @@ import numpy as np
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import streamlit as st
+from pykrx import stock
 
 
 # 수익률 = (당월말 종가 - 전월말 종가) / 전월말 종가
@@ -194,3 +195,107 @@ st.plotly_chart(fig11, use_container_width=True)
 
 df_test = df_idx_prc_eom.copy()
 st.write(df_test.sort_values(['CLSPRC_IDX_CHG']).head(10))
+
+
+
+
+
+today = datetime.today().strftime('%Y%m%d')
+
+df_idx = stock.get_index_fundamental("20190101", today, "1001").reset_index()
+df_mkt = stock.get_market_fundamental("20190101", today, "005930").reset_index()
+df_mg = df_mkt.merge(df_idx, on='날짜') 
+df_mg['ratio'] = df_mg['PBR_x'] / df_mg['PBR_y'] / (df_mg['PBR_x'].head(1).values[0] / df_mg['PBR_y'].head(1).values[0])
+# 리노공업 058470
+# 한미반도체 042700
+# SKC 011790
+# 유한양행 000100
+# 셀트리온 068270
+# 삼성전자 005930
+# 한국금융지주 071050
+
+#df_mg = df_mg.melt(id_vars='날짜', value_vars=['PBR_x', 'PBR_y'])
+#display(df_mg)
+
+
+today = datetime.today().strftime('%Y%m%d')
+
+
+df_idx = stock.get_index_fundamental("20100101", today, "1001").reset_index()
+df_idx['1/PER'] = 1 / df_idx['PER'] * 100
+
+avgDays = 30
+
+df_idx['1/PER_MA'] = df_idx['1/PER'].rolling(window=avgDays).mean()
+df_idx['종가_MA'] = df_idx['종가'].rolling(window=avgDays).mean()
+df_idx['PBR_MA'] = df_idx['PBR'].rolling(window=avgDays).mean()
+
+# Create figure with secondary y-axis
+#fig = make_subplots(specs=[[{"secondary_y": True}]])
+fig = go.Figure()
+
+# Add traces
+fig.add_trace(
+    go.Scatter(x=df_idx['날짜'], y=df_idx['1/PER_MA'], name="PER Earn Rate"),
+)
+
+fig.add_trace(
+    go.Scatter(x=df_idx['날짜'], y=df_idx['종가_MA'], name="KOSPI", yaxis="y2"),
+)
+
+fig.add_trace(
+    go.Scatter(x=df_idx['날짜'], y=df_idx['PBR_MA'], name="PBR", yaxis="y3"),
+)
+
+# Create axis objects
+fig.update_layout(
+    xaxis=dict(
+        domain=[0.05, 1]
+    ),
+    yaxis=dict(
+        title="PER Earn Rate",
+        titlefont=dict(
+            color="#1f77b4"
+        ),
+        tickfont=dict(
+            color="#1f77b4"
+        )
+    ),
+    yaxis2=dict(
+        title="KOSPI Index",
+        titlefont=dict(
+            color="#ff7f0e"
+        ),
+        tickfont=dict(
+            color="#ff7f0e"
+        ),
+        anchor="free",
+        overlaying="y",
+        side="left",
+        position=0.02
+    ),
+    yaxis3=dict(
+        title="PBR",
+        titlefont=dict(
+            color="#d62728"
+        ),
+        tickfont=dict(
+            color="#d62728"
+        ),
+        anchor="x",
+        overlaying="y",
+        side="right"
+    ),
+)
+
+# Set x-axis title
+fig.update_xaxes(title_text="Date")
+
+
+fig.update_xaxes(dtick='M3')
+
+#fig.show()
+#display(df_idx)
+
+st.plotly_chart(fig, , use_container_width=True)
+st.write(df_idx)
