@@ -156,5 +156,33 @@ fig.update_layout(xaxis=dict(tickmode='linear', dtick=1),
 
 #fig.show()
 st.plotly_chart(fig)
-st.write(df_idx_prc_eom)
 
+
+
+
+df_idx_prc_eom['diff'] = df_idx_prc_eom['CLSPRC_IDX'].diff()
+#df_sample = df_idx_prc_eom[(df_idx_prc_eom['TRD_DD']>='2018-01-01')&(df_idx_prc_eom['TRD_DD']<='2021-12-31')].reset_index(drop=True)
+df_sample = df_idx_prc_eom[(df_idx_prc_eom['TRD_DD']>='2015-01-01')].reset_index(drop=True)
+#df_sample['diff'] = np.where(df_sample['diff'].isnull(), df_sample['CLSPRC_IDX'], df_sample['diff'])
+display(df_sample)
+fig11 = go.Figure(go.Waterfall(
+    name = "KOSPI", orientation = "v",
+    measure = ["relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", ],
+    x = df_sample['TRD_DD'],
+    textposition = "outside",
+    text = df_sample['CLSPRC_IDX'],
+    y = df_sample['diff'],
+    connector = {"line":{"color":"rgb(63, 63, 63)"}},
+))
+
+fig11.update_layout(
+        title = "KOSPI 2021",
+        showlegend = True,
+)
+fig11.update_xaxes(dtick="M1")
+
+st.plotly_chart(fig11)
+
+
+df_test = df_idx_prc_eom.copy()
+st.write(df_test.sort_values(['CLSPRC_IDX_CHG']).head(10))
