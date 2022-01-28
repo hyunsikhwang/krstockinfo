@@ -297,5 +297,5 @@ fig.update_xaxes(dtick='M3')
 #fig.show()
 #display(df_idx)
 
-st.plotly_chart(fig, , use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
 st.write(df_idx)
