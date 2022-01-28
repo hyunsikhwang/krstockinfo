@@ -84,7 +84,7 @@ def idx_prc(mktType):
     return org_df
 
 max_work_dt = maxworkdt_command()
-display(max_work_dt)
+#display(max_work_dt)
 df_idx_prc = idx_prc(max_work_dt)
 #display(df_idx_prc)
 
