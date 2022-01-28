@@ -164,7 +164,7 @@ df_idx_prc_eom['diff'] = df_idx_prc_eom['CLSPRC_IDX'].diff()
 #df_sample = df_idx_prc_eom[(df_idx_prc_eom['TRD_DD']>='2018-01-01')&(df_idx_prc_eom['TRD_DD']<='2021-12-31')].reset_index(drop=True)
 df_sample = df_idx_prc_eom[(df_idx_prc_eom['TRD_DD']>='2015-01-01')].reset_index(drop=True)
 #df_sample['diff'] = np.where(df_sample['diff'].isnull(), df_sample['CLSPRC_IDX'], df_sample['diff'])
-display(df_sample)
+#display(df_sample)
 fig11 = go.Figure(go.Waterfall(
     name = "KOSPI", orientation = "v",
     measure = ["relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", "relative", ],
