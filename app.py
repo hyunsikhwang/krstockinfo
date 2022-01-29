@@ -231,6 +231,8 @@ df_idx['1/PER_MA'] = df_idx['1/PER'].rolling(window=avgDays).mean()
 df_idx['종가_MA'] = df_idx['종가'].rolling(window=avgDays).mean()
 df_idx['PBR_MA'] = df_idx['PBR'].rolling(window=avgDays).mean()
 
+df_idx['ROE'] = df_idx['PBR'] / df_idx['PER'] * 100
+
 # Create figure with secondary y-axis
 #fig = make_subplots(specs=[[{"secondary_y": True}]])
 fig = go.Figure()
