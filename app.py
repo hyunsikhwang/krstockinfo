@@ -232,6 +232,8 @@ df_idx['종가_MA'] = df_idx['종가'].rolling(window=avgDays).mean()
 df_idx['PBR_MA'] = df_idx['PBR'].rolling(window=avgDays).mean()
 
 df_idx['ROE'] = df_idx['PBR'] / df_idx['PER'] * 100
+df_idx['ROE_MA'] = df_idx['ROE'].rolling(window=avgDays).mean()
+
 
 # Create figure with secondary y-axis
 #fig = make_subplots(specs=[[{"secondary_y": True}]])
@@ -240,6 +242,10 @@ fig = go.Figure()
 # Add traces
 fig.add_trace(
     go.Scatter(x=df_idx['날짜'], y=df_idx['1/PER_MA'], name="PER Earn Rate"),
+)
+
+fig.add_trace(
+    go.Scatter(x=df_idx['날짜'], y=df_idx['ROE_MA'], name="ROE"),
 )
 
 fig.add_trace(
