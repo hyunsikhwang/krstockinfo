@@ -182,6 +182,7 @@ fig11 = go.Figure(go.Waterfall(
     text = df_sample['CLSPRC_IDX'],
     y = df_sample['diff'],
     connector = {"line":{"color":"rgb(63, 63, 63)"}},
+    width=2000000000,
 ))
 
 fig11.update_layout(
