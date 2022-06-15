@@ -10,6 +10,7 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import streamlit as st
 from pykrx import stock
+from pytz import timezone, utc
 
 
 # 수익률 = (당월말 종가 - 전월말 종가) / 전월말 종가
@@ -93,7 +94,12 @@ st.set_page_config(
     initial_sidebar_state="expanded"
     )
 
-max_work_dt = maxworkdt_command()
+#max_work_dt = maxworkdt_command()
+KST = timezone('Asia/Seoul')
+now = datetime.utcnow()
+
+SeoulTime = utc.localize(now).astimezone(KST)
+max_work_dt = SeoulTime.strftime('%Y%m%d')
 #display(max_work_dt)
 df_idx_prc = idx_prc(max_work_dt)
 #display(df_idx_prc)
