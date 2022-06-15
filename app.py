@@ -100,7 +100,7 @@ now = datetime.utcnow()
 
 SeoulTime = utc.localize(now).astimezone(KST)
 max_work_dt = SeoulTime.strftime('%Y%m%d')
-#display(max_work_dt)
+st.write(max_work_dt)
 df_idx_prc = idx_prc(max_work_dt)
 #display(df_idx_prc)
 
