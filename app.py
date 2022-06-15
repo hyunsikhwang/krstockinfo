@@ -40,7 +40,7 @@ def maxworkdt_command():
               'menuId': 'MDC0201030108'}
 
     MktData = get_beautiful_soup(url, params=params)
-    #print(MktData)
+    st.write(MktData)
 
     data = json.loads(MktData.text)
     df_result = data['result']['output'][0]['max_work_dt']
